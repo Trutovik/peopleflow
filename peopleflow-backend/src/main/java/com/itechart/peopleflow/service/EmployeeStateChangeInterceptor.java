@@ -24,7 +24,7 @@ public class EmployeeStateChangeInterceptor extends StateMachineInterceptorAdapt
   @Override
   public void preStateChange(State<EmployeeState, EmployeeEvent> state, Message<EmployeeEvent> message, Transition<EmployeeState, EmployeeEvent> transition, StateMachine<EmployeeState, EmployeeEvent> stateMachine, StateMachine<EmployeeState, EmployeeEvent> rootStateMachine) {
     Optional.ofNullable(message).ifPresent(msg -> {
-      Optional.ofNullable(String.class.cast(msg.getHeaders().getOrDefault(KafkaConsumer.EMPLOYEE_ID_HEADER, "")))
+      Optional.ofNullable(String.class.cast(msg.getHeaders().getOrDefault(EmployeeStateChangeService.EMPLOYEE_ID_HEADER, "")))
           .ifPresent(employeeId -> {
             EmployeeEntity employee = employeeRepository.findByUserId(employeeId);
             employee.setState(state.getId());

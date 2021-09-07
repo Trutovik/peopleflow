@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 class EmployeeServiceTest {
 
   @Autowired
+  EmployeeStateChangeService employeeStateChangeService;
+
+  @Autowired
   KafkaConsumer employeeService;
 
   @Autowired
@@ -41,22 +44,22 @@ class EmployeeServiceTest {
     employeeService.createEmployee(employee);
     EmployeeEntity entity = employeeRepository.findByUserId(employee.getUserId());
     assert(entity.getState().equals(EmployeeState.ADDED));
-    employeeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.APPROVED);
+    employeeStateChangeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.APPROVED);
     assert(entity.getState().equals(EmployeeState.ADDED));
     assert(!entity.getState().equals(EmployeeState.APPROVED));
-    employeeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.IN_CHECK);
+    employeeStateChangeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.IN_CHECK);
     assert(entity.getState().equals(EmployeeState.IN_CHECK));
     assert(!entity.getState().equals(EmployeeState.ADDED));
-    employeeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.ACTIVE);
+    employeeStateChangeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.ACTIVE);
     assert(entity.getState().equals(EmployeeState.IN_CHECK));
     assert(!entity.getState().equals(EmployeeState.ACTIVE));
-    employeeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.APPROVED);
+    employeeStateChangeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.APPROVED);
     assert(entity.getState().equals(EmployeeState.APPROVED));
     assert(!entity.getState().equals(EmployeeState.IN_CHECK));
-    employeeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.ADDED);
+    employeeStateChangeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.ADDED);
     assert(entity.getState().equals(EmployeeState.APPROVED));
     assert(!entity.getState().equals(EmployeeState.IN_CHECK));
-    employeeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.ACTIVE);
+    employeeStateChangeService.updateEmployeeStatus(entity.getUserId(), EmployeeState.ACTIVE);
     assert(entity.getState().equals(EmployeeState.ACTIVE));
     assert(!entity.getState().equals(EmployeeState.APPROVED));
   }
