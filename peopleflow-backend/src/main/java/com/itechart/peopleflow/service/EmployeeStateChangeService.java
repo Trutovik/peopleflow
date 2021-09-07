@@ -25,8 +25,7 @@ public class EmployeeStateChangeService {
   private final StateMachineFactory<EmployeeState, EmployeeEvent> stateMachineFactory;
 
   @Transactional
-  public EmployeeDto updateEmployeeStatus(String userId, EmployeeState status) {
-    EmployeeEvent event = getEmployeeEventByEmployeeState(status);
+  public EmployeeDto updateEmployeeStatus(String userId, EmployeeEvent event) {
     StateMachine<EmployeeState, EmployeeEvent> sm = build(userId);
     sendEvent(userId, sm, event);
     return null;
@@ -51,18 +50,5 @@ public class EmployeeStateChangeService {
         .setHeader(EMPLOYEE_ID_HEADER, employeeId)
         .build();
     sm.sendEvent(msg);
-  }
-
-  private EmployeeEvent getEmployeeEventByEmployeeState(EmployeeState state) {
-    switch (state) {
-      case ACTIVE:
-        return EmployeeEvent.ACTIVATE;
-      case APPROVED:
-        return EmployeeEvent.APPROVE;
-      case IN_CHECK:
-        return EmployeeEvent.CHECK;
-      default:
-        return EmployeeEvent.ADD;
-    }
   }
 }

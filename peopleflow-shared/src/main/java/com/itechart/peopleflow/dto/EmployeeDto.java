@@ -1,5 +1,6 @@
 package com.itechart.peopleflow.dto;
 
+import com.itechart.peopleflow.service.state.EmployeeEvent;
 import com.itechart.peopleflow.service.state.EmployeeState;
 import lombok.*;
 
@@ -21,4 +22,5 @@ public class EmployeeDto implements Serializable {
   private String email;
   private String password;
   private EmployeeState state;
+  private EmployeeEvent event;
 }

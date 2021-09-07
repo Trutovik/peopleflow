@@ -30,11 +30,11 @@ public class KafkaConsumer {
     System.out.println("Consumed employee: " + employeeDto);
     EmployeeEntity employeeEntity = EmployeeEntity.builder().build();
     BeanUtils.copyProperties(employeeDto, employeeEntity);
-    if (employeeEntity.getState() == null) {
+    if (employeeDto.getEvent() == null) {
       employeeEntity.setState(EmployeeState.ADDED);
       employeeRepository.save(employeeEntity);
     } else {
-      employeeStateChangeService.updateEmployeeStatus(employeeDto.getUserId(), employeeDto.getState());
+      employeeStateChangeService.updateEmployeeStatus(employeeDto.getUserId(), employeeDto.getEvent());
     }
   }
 }

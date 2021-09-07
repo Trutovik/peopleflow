@@ -2,6 +2,7 @@ package com.itechart.peopleflow.controller;
 
 import com.itechart.peopleflow.dto.EmployeeDto;
 import com.itechart.peopleflow.service.EmployeeService;
+import com.itechart.peopleflow.service.state.EmployeeEvent;
 import com.itechart.peopleflow.service.state.EmployeeState;
 import com.itechart.peopleflow.ui.request.EmployeeRequest;
 import org.springframework.beans.BeanUtils;
@@ -27,12 +28,12 @@ public class EmployeeController {
     return createdEmployee;
   }
 
-  @PostMapping("/{id}/{state}")
-  public String updateEmployeeState(@PathVariable("id") String id, @PathVariable("state") String state) {
-    EmployeeState employeeState = EmployeeState.valueOf(state.toUpperCase(Locale.ROOT));
+  @PostMapping("/{id}/{event}")
+  public String updateEmployeeState(@PathVariable("id") String id, @PathVariable("event") String event) {
+    EmployeeEvent employeeEvent = EmployeeEvent.valueOf(event.toUpperCase(Locale.ROOT));
     EmployeeDto employee = EmployeeDto.builder()
       .userId(id)
-      .state(employeeState)
+      .event(employeeEvent)
       .build();
     return employeeService.createOrUpdateEmployee(employee);
   }
