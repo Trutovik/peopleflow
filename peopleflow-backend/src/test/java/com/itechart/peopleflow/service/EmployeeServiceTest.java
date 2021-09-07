@@ -1,5 +1,6 @@
 package com.itechart.peopleflow.service;
 
+import com.itechart.peopleflow.PeopleflowBackendApplication;
 import com.itechart.peopleflow.dto.EmployeeDto;
 import com.itechart.peopleflow.entity.EmployeeEntity;
 import com.itechart.peopleflow.listener.KafkaConsumer;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = PeopleflowBackendApplication.class)
 class EmployeeServiceTest {
 
   @Autowired

@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         String userId = UUID.randomUUID().toString();
         employee.setUserId(userId);
       }
-      kafkaTemplate.send("first_topic", employee);
+      kafkaTemplate.send("employee", employee);
       return employee.getUserId();
     } catch (Exception e) {
       throw new AddOrUpdateEmployeeException(e.getMessage());

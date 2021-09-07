@@ -23,9 +23,11 @@ services:
     depends_on:
       - zookeeper
   db:
-    image: docker.io/mysql:alpine
+    image: mysql:latest
     volumes:
       - "mysql_data:/peopleflow"
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_USER: mysql
       MYSQL_PASSWORD: mysql

@@ -27,7 +27,7 @@ public class KafkaConsumer {
   private final EmployeeStateChangeInterceptor employeeStateChangeInterceptor;
   private final StateMachineFactory<EmployeeState, EmployeeEvent> stateMachineFactory;
 
-  @KafkaListener(topics = "first_topic", groupId = "groupId", containerFactory = "employeeKafkaListenerContainerFactory")
+  @KafkaListener(topics = "employee", groupId = "groupId", containerFactory = "employeeKafkaListenerContainerFactory")
   public void createEmployee(EmployeeDto employeeDto) {
     System.out.println("Consumed employee: " + employeeDto);
     EmployeeEntity employeeEntity = EmployeeEntity.builder().build();
@@ -46,14 +46,6 @@ public class KafkaConsumer {
     StateMachine<EmployeeState, EmployeeEvent> sm = build(userId);
     sendEvent(userId, sm, event);
     return null;
-  }
-
-  @Transactional
-  public EmployeeDto getByUserId(String userId) {
-    EmployeeEntity employee = employeeRepository.findByUserId(userId);
-    EmployeeDto employeeDto = EmployeeDto.builder().build();
-    BeanUtils.copyProperties(employee, employeeDto);
-    return employeeDto;
   }
 
   private StateMachine<EmployeeState, EmployeeEvent> build(String employeeId) {

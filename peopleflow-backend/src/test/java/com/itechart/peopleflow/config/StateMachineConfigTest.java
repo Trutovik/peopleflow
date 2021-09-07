@@ -1,5 +1,6 @@
 package com.itechart.peopleflow.config;
 
+import com.itechart.peopleflow.PeopleflowBackendApplication;
 import com.itechart.peopleflow.service.state.EmployeeEvent;
 import com.itechart.peopleflow.service.state.EmployeeState;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import org.springframework.statemachine.config.StateMachineFactory;
 
 import java.util.UUID;
 
-@SpringBootTest
+@SpringBootTest(classes = PeopleflowBackendApplication.class)
 class StateMachineConfigTest {
 
   @Autowired
