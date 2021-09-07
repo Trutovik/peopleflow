@@ -1,8 +1,30 @@
-version: "3.0"
+version: '3'
 
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "employee:1:3"
+    depends_on:
+      - zookeeper
   mysqldb:
     image: mysql:latest
+    container_name: kafka
     volumes:
       - "mysql_data:/peopleflow"
     ports:
@@ -12,5 +34,9 @@ services:
       MYSQL_DATABASE: peopleflow
 
 volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
   mysql_data:
     driver: local
