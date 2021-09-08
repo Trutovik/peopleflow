@@ -1,8 +1,8 @@
 package com.itechart.peopleflow.service;
 
 import com.itechart.peopleflow.entity.EmployeeEntity;
-import com.itechart.peopleflow.listener.KafkaConsumer;
 import com.itechart.peopleflow.repository.EmployeeRepository;
+import com.itechart.peopleflow.service.impl.EmployeeStateChangeServiceImpl;
 import com.itechart.peopleflow.service.state.EmployeeEvent;
 import com.itechart.peopleflow.service.state.EmployeeState;
 import lombok.AllArgsConstructor;
